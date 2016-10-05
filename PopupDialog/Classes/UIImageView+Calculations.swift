@@ -37,7 +37,6 @@ internal extension UIImageView {
         guard let image = image where image.size.height > 0 else {
             return 0.0
         }
-        let width = frame.size.width
-        return (image.size.height * width) / image.size.width
+        return image.size.height
     }
 }

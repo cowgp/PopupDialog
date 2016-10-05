@@ -164,6 +164,7 @@ final public class PopupDialogDefaultView: UIView {
 
         // ImageView constraints
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[imageView]|", options: [], metrics: nil, views: views)
+        constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-30-[imageView]|", options: [], metrics: nil, views: views)
         imageHeightConstraint = NSLayoutConstraint(item: imageView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .Height, multiplier: 0, constant: 0)
         constraints.append(imageHeightConstraint!)
 

@@ -38,7 +38,6 @@ internal extension UIImageView {
             return 0.0
         }
         let width = frame.size.width
-        let ratio = image.size.height / image.size.width
-        return width * ratio
+        return (image.size.height * width) / image.size.width
     }
 }

@@ -73,7 +73,7 @@ final public class PopupDialogDefaultView: UIView {
     internal lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .center
         return imageView
     }()
 
@@ -98,6 +98,10 @@ final public class PopupDialogDefaultView: UIView {
         messageLabel.font = UIFont.systemFont(ofSize: 14)
         return messageLabel
     }()
+    
+    // MARK: - Constraints
+    /// The height constraint of the image view, 0 by default
+    internal var imageHeightConstraint: NSLayoutConstraint?
 
     // MARK: - Initializers
 
@@ -129,9 +133,18 @@ final public class PopupDialogDefaultView: UIView {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[imageView]|", options: [], metrics: nil, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(==20@900)-[titleLabel]-(==20@900)-|", options: [], metrics: nil, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-(==20@900)-[messageLabel]-(==20@900)-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[imageView]-(==30@900)-[titleLabel]-(==8@900)-[messageLabel]-(==30@900)-|", options: [], metrics: nil, views: views)
-
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-(==30@900)-[imageView]-(==30@900)-[titleLabel]-(==8@900)-[messageLabel]-(==30@900)-|", options: [], metrics: nil, views: views)
+        
+        let imageHeight = imageView.image?.size.height ?? 0
+        imageHeightConstraint = NSLayoutConstraint.init(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 0, constant: imageHeight)
+        constraints.append(imageHeightConstraint!)
+        
         // Activate constraints
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        imageHeightConstraint?.constant = imageView.image?.size.height ?? 0
     }
 }
